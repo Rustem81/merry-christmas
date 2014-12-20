@@ -5,8 +5,8 @@
 
 var canvas = document.getElementById("canvas"),
     ctx = canvas.getContext("2d"),
-    width = 500,
-    height = 200,
+    width = 512,
+    height = 350,
     player = {
       x : width/2,
       y : height - 5,
@@ -23,6 +23,13 @@ var canvas = document.getElementById("canvas"),
 
 canvas.width = width;
 canvas.height = height;
+
+var background = new Image();
+background.src = "http://www.spriters-resource.com/resources/sheets/5/4796.png";
+
+background.onload = function(){
+  ctx.drawImage(background,0,0);   
+}
 
 function update(){
   // check keys
@@ -65,6 +72,9 @@ function update(){
     }
   
   ctx.clearRect(0,0,width,height);
+
+  ctx.drawImage(background,0,0); 
+  
   ctx.fillStyle = "red";
   ctx.fillRect(player.x, player.y, player.width, player.height);
     
