@@ -1,3 +1,13 @@
+/*
+  Little fail here. We're applying a chroma key using putImageData, but this doesn't allow us to have a "real" alpha on the image.
+  That's because putImageData doesn't use compositing.
+
+  There might be better way to do this, but for the moment we'll just set chroma key color to the background one.
+
+  - https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Compositing
+  - http://stackoverflow.com/questions/5942141/mask-for-putimagedata-with-html5-canvas
+ */
+
 (function() {
     var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
     window.requestAnimationFrame = requestAnimationFrame;
@@ -20,7 +30,13 @@ var canvas = document.getElementById("canvas"),
     keys = [],
     friction = 0.8,
     gravity = 0.3,
-    background_tile_height = 350;
+    background_tile_height = 350,
+    background_color = {
+      red: 0,
+      green: 0,
+      blue: 255,
+      alpha: 255,
+    };
 
 canvas.width = width;
 canvas.height = height;
@@ -70,6 +86,9 @@ function update(){
   
   ctx.clearRect(0,0,width,height);
 
+  ctx.fillStyle = "rgba(" + background_color.red + ", " + background_color.green + ", " + background_color.blue + ", " + background_color.alpha + ")";
+  ctx.fillRect(0, 0, width, height);
+
   // background image
   ctx.save();
   var ptrn = ctx.createPattern(background,'repeat-x');
@@ -91,7 +110,10 @@ function update(){
       var sameGreen = data[i + 1] === start.green;
       var sameBlue = data[i + 2] === start.blue;
       if (sameRed && sameGreen && sameBlue) {
-          data[i + 3] = 0;
+        data[i] = background_color.red;
+        data[i + 1] = background_color.green;
+        data[i + 2] = background_color.blue;
+        data[i + 3] = background_color.alpha;
       }
   }
   ctx.putImageData(imageData, 0, height - background_tile_height);
