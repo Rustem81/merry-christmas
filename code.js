@@ -5,8 +5,8 @@
 
 var canvas = document.getElementById("canvas"),
     ctx = canvas.getContext("2d"),
-    width = 512 * 2.5,
-    height = 600,
+    width = window.innerWidth;
+    height = window.innerHeight,
     player = {
       x : width/2,
       y : height - 5,
@@ -84,8 +84,6 @@ function update(){
       green: data[1],
       blue: data[2]
   };
-
-  console.log(start.red, start.green, start.blue);
 
   // iterate over all pixels
   for(var i = 0, n = data.length; i < n; i += 4) {
