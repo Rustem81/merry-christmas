@@ -6,7 +6,7 @@
 var canvas = document.getElementById("canvas"),
     ctx = canvas.getContext("2d"),
     width = 512 * 2.5,
-    height = 350,
+    height = 600,
     player = {
       x : width/2,
       y : height - 5,
@@ -19,7 +19,8 @@ var canvas = document.getElementById("canvas"),
     },
     keys = [],
     friction = 0.8,
-    gravity = 0.3;
+    gravity = 0.3,
+    background_tile_height = 350;
 
 canvas.width = width;
 canvas.height = height;
@@ -70,9 +71,12 @@ function update(){
   ctx.clearRect(0,0,width,height);
 
   // background image
+  ctx.save();
   var ptrn = ctx.createPattern(background,'repeat-x');
   ctx.fillStyle = ptrn;
-  ctx.fillRect(0,0,width,height);
+  ctx.translate(0, height - background_tile_height);
+  ctx.fillRect(0, 0, width, background_tile_height);
+  ctx.restore();
   
   // red dot
   ctx.fillStyle = "red";
