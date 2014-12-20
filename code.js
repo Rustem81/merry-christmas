@@ -26,7 +26,7 @@ canvas.width = width;
 canvas.height = height;
 
 var background = new Image();
-background.src = "http://www.spriters-resource.com/resources/sheets/5/4796.png";
+background.src = "background.png";
 
 function update(){
   // check keys
@@ -76,6 +76,27 @@ function update(){
   ctx.fillStyle = ptrn;
   ctx.translate(0, height - background_tile_height);
   ctx.fillRect(0, 0, width, background_tile_height);
+  // chroma key
+  var imageData = ctx.getImageData(0, height - background_tile_height, width, background_tile_height);
+  var data = imageData.data;
+  var start = {
+      red: data[0],
+      green: data[1],
+      blue: data[2]
+  };
+
+  console.log(start.red, start.green, start.blue);
+
+  // iterate over all pixels
+  for(var i = 0, n = data.length; i < n; i += 4) {
+      var sameRed = data[i] === start.red;
+      var sameGreen = data[i + 1] === start.green;
+      var sameBlue = data[i + 2] === start.blue;
+      if (sameRed && sameGreen && sameBlue) {
+          data[i + 3] = 0;
+      }
+  }
+  ctx.putImageData(imageData, 0, height - background_tile_height);
   ctx.restore();
   
   // red dot
