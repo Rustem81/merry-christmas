@@ -30,7 +30,7 @@ var canvas = document.getElementById("canvas"),
   keys = [],
   friction = 0.8,
   gravity = 0.3,
-  background_tile_height = 350,
+  background_tile_height = 320,
   background_color = {
     red: 107,
     green: 146,
@@ -194,14 +194,22 @@ function update() {
   var mario_frame = mario_frames[mario_index];
   ctx.drawImage(mario_frame, player.x, player.y + player.height - mario_frame.height, mario_frame.width, mario_frame.height);
 
+  ctx.save();
   var font_height = 40;
+  var margin_vertical = 22;
   ctx.font = "italic " + font_height + "pt Calibri";
-  ctx.fillStyle = 'red';
+  ctx.fillStyle = 'Gold';
   ctx.textAlign = 'center';
-  ctx.fillText('Merry Christmas', width / 2, font_height + 6);
+  ctx.shadowBlur = 5;
+  ctx.shadowColor = "DarkGoldenRod";
+  ctx.shadowOffsetX = 1;
+  ctx.shadowOffsetY = 3;
+  ctx.fillText('Merry Christmas', width / 2, font_height + margin_vertical);
+  ctx.fillText('and a Happy New Year', width / 2, (font_height + margin_vertical) * 2);
+  ctx.restore();
     
   // requestAnimationFrame(update);
-  
+
   ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
     ctx.beginPath();
     for(var i = 0; i < mp; i++)
@@ -225,5 +233,5 @@ document.body.addEventListener("keyup", function(e) {
 
 window.addEventListener("load", function(){
   // update();
-  setInterval(update, 60);
+  setInterval(update, 33);
 });
