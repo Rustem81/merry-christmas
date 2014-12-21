@@ -44,7 +44,16 @@ canvas.height = height;
 var background = new Image();
 background.src = "background.png";
 
-function update(){
+var mario0 = new Image();
+mario0.src = "mario_0.png";
+
+var mario1 = new Image();
+mario1.src = "mario_1.png";
+
+var mario_frames = [ mario0, mario1 ];
+var mario_index = 0;
+
+function update() {
   // check keys
     if (keys[38] || keys[32]) {
         // up arrow or space
@@ -120,8 +129,12 @@ function update(){
   ctx.restore();
   
   // red dot
-  ctx.fillStyle = "red";
-  ctx.fillRect(player.x, player.y, player.width, player.height);
+  // ctx.fillStyle = "red";
+  // ctx.fillRect(player.x, player.y, player.width, player.height);
+
+  // mario
+  var mario_frame = mario_frames[mario_index];
+  ctx.drawImage(mario_frame, player.x, player.y + player.height - mario_frame.height, mario_frame.width, mario_frame.height);
     
   requestAnimationFrame(update);
 }
