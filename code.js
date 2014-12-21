@@ -135,6 +135,12 @@ function update() {
   // mario
   var mario_frame = mario_frames[mario_index];
   ctx.drawImage(mario_frame, player.x, player.y + player.height - mario_frame.height, mario_frame.width, mario_frame.height);
+
+  var font_height = 40;
+  ctx.font = "italic " + font_height + "pt Calibri";
+  ctx.fillStyle = 'red';
+  ctx.textAlign = 'center';
+  ctx.fillText('Merry Christmas', width / 2, font_height + 6);
     
   requestAnimationFrame(update);
 }
