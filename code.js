@@ -14,29 +14,42 @@
 })();
 
 var canvas = document.getElementById("canvas"),
-    ctx = canvas.getContext("2d"),
-    width = window.innerWidth;
-    height = window.innerHeight,
-    player = {
-      x : width/2,
-      y : height - 5,
-      width : 5,
-      height : 5,
-      speed: 3,
-      velX: 0,
-      velY: 0,
-      jumping: false
-    },
-    keys = [],
-    friction = 0.8,
-    gravity = 0.3,
-    background_tile_height = 350,
-    background_color = {
-      red: 0,
-      green: 0,
-      blue: 255,
-      alpha: 255,
-    };
+  ctx = canvas.getContext("2d"),
+  width = window.innerWidth;
+  height = window.innerHeight,
+  player = {
+    x : width/2,
+    y : height - 5,
+    width : 5,
+    height : 5,
+    speed: 3,
+    velX: 0,
+    velY: 0,
+    jumping: false
+  },
+  keys = [],
+  friction = 0.8,
+  gravity = 0.3,
+  background_tile_height = 350,
+  background_color = {
+    red: 107,
+    green: 146,
+    blue: 185,
+    alpha: 255,
+  };
+
+  //snowflake particles
+  var mp = 25; //max particles
+  var particles = [];
+  for(var i = 0; i < mp; i++)
+  {
+    particles.push({
+      x: Math.random()*width, //x-coordinate
+      y: Math.random()*height, //y-coordinate
+      r: Math.random()*4+1, //radius
+      d: Math.random()*mp //density
+    });
+  };
 
 canvas.width = width;
 canvas.height = height;
@@ -52,6 +65,51 @@ mario1.src = "mario_1.png";
 
 var mario_frames = [ mario0, mario1 ];
 var mario_index = 0;
+
+//Function to move the snowflakes
+  //angle will be an ongoing incremental flag. Sin and Cos functions will be applied to it to create vertical and horizontal movements of the flakes
+  var angle = 0;
+  function update_snowflakes()
+  {
+    angle += 0.01;
+    for(var i = 0; i < mp; i++)
+    {
+      var p = particles[i];
+      //Updating X and Y coordinates
+      //We will add 1 to the cos function to prevent negative values which will lead flakes to move upwards
+      //Every particle has its own density which can be used to make the downward movement different for each flake
+      //Lets make it more random by adding in the radius
+      p.y += Math.cos(angle+p.d) + 1 + p.r/2;
+      p.x += Math.sin(angle) * 2;
+
+      var W = width;
+      var H = height;
+      
+      //Sending flakes back from the top when it exits
+      //Lets make it a bit more organic and let flakes enter from the left and right also.
+      if(p.x > W+5 || p.x < -5 || p.y > H)
+      {
+        if(i%3 > 0) //66.67% of the flakes
+        {
+          particles[i] = {x: Math.random()*W, y: -10, r: p.r, d: p.d};
+        }
+        else
+        {
+          //If the flake is exitting from the right
+          if(Math.sin(angle) > 0)
+          {
+            //Enter from the left
+            particles[i] = {x: -5, y: Math.random()*H, r: p.r, d: p.d};
+          }
+          else
+          {
+            //Enter from the right
+            particles[i] = {x: W+5, y: Math.random()*H, r: p.r, d: p.d};
+          }
+        }
+      }
+    }
+  }
 
 function update() {
   // check keys
@@ -142,7 +200,18 @@ function update() {
   ctx.textAlign = 'center';
   ctx.fillText('Merry Christmas', width / 2, font_height + 6);
     
-  requestAnimationFrame(update);
+  // requestAnimationFrame(update);
+  
+  ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
+    ctx.beginPath();
+    for(var i = 0; i < mp; i++)
+    {
+      var p = particles[i];
+      ctx.moveTo(p.x, p.y);
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI*2, true);
+    }
+    ctx.fill();
+    update_snowflakes();
 }
 
 document.body.addEventListener("keydown", function(e) {
@@ -154,6 +223,7 @@ document.body.addEventListener("keyup", function(e) {
 });
 
 
-window.addEventListener("load",function(){
-    update();
+window.addEventListener("load", function(){
+  // update();
+  setInterval(update, 60);
 });
