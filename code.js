@@ -84,7 +84,7 @@ var mario_index = 0;
 
       var W = width;
       var H = height;
-      
+
       //Sending flakes back from the top when it exits
       //Lets make it a bit more organic and let flakes enter from the left and right also.
       if(p.x > W+5 || p.x < -5 || p.y > H)
@@ -132,25 +132,25 @@ function update() {
             player.velX--;
         }
     }
-   
+
     player.velX *= friction;
-   
+
     player.velY += gravity;
-  
+
     player.x += player.velX;
     player.y += player.velY;
-    
+
     if (player.x >= width-player.width) {
         player.x = width-player.width;
     } else if (player.x <= 0) {
         player.x = 0;
     }
-  
+
     if(player.y >= height-player.height){
         player.y = height - player.height;
         player.jumping = false;
     }
-  
+
   ctx.clearRect(0,0,width,height);
 
   ctx.fillStyle = "rgba(" + background_color.red + ", " + background_color.green + ", " + background_color.blue + ", " + background_color.alpha + ")";
@@ -185,7 +185,7 @@ function update() {
   }
   ctx.putImageData(imageData, 0, height - background_tile_height);
   ctx.restore();
-  
+
   // red dot
   // ctx.fillStyle = "red";
   // ctx.fillRect(player.x, player.y, player.width, player.height);
@@ -196,18 +196,21 @@ function update() {
 
   ctx.save();
   var font_height = 40;
+  var top_margin = 18;
   var margin_vertical = 22;
-  ctx.font = "italic " + font_height + "pt Calibri";
-  ctx.fillStyle = 'Gold';
+  ctx.font = font_height + "pt SuperMario";
+  ctx.fillStyle = 'Snow';
   ctx.textAlign = 'center';
-  ctx.shadowBlur = 5;
-  ctx.shadowColor = "DarkGoldenRod";
+  ctx.shadowBlur = 3;
+  ctx.shadowColor = "SkyBlue";
   ctx.shadowOffsetX = 1;
   ctx.shadowOffsetY = 3;
-  ctx.fillText('Merry Christmas', width / 2, font_height + margin_vertical);
-  ctx.fillText('and a Happy New Year', width / 2, (font_height + margin_vertical) * 2);
+  var title_y = font_height + margin_vertical + top_margin;
+  ctx.fillText('Merry Christmas', width / 2, title_y);
+  title_y += font_height + margin_vertical
+  ctx.fillText('and a Happy New Year', width / 2, title_y);
   ctx.restore();
-    
+
   // requestAnimationFrame(update);
 
   ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
