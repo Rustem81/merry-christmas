@@ -16,7 +16,7 @@
 var canvas = document.getElementById("canvas"),
   ctx = canvas.getContext("2d"),
   width = window.innerWidth;
-  height = window.innerHeight,
+  height = Math.min(window.innerHeight, 550);
   player = {
     x : width/2,
     y : height - 5,
