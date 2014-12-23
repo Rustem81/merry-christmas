@@ -5,8 +5,6 @@
 
 body {
 	margin: 0;
-	/*background: rgba(8, 48, 112, 1);*/
-	color: white;
 }
 
 #canvas {
@@ -15,12 +13,18 @@ body {
 #content {
 	margin-top: -4px;
 	background: white;
-	color: rgba(8, 48, 112, 1);
+	color: skyblue;
+	/*text-shadow: rgba(100, 149, 237, 1) 1px 1px 0px;*/
 
-	padding: 20px 10px;
+	padding: 40px 10px;
 
 	text-align: center;
 	font-size: 20pt;
-	font-family: "Calibri", Times, serif;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 	font-style: italic;
+}
+
+#content a {
+	text-decoration: none;
+	color: rgb(107, 146, 185);
 }
