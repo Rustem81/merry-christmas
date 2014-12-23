@@ -90,7 +90,7 @@ function update() {
   ctx.restore();
 
   // mario
-  cm_draw_mario(mario, ctx);
+  // cm_draw_mario(mario, ctx);
 
   write_greetings(ctx);
 
