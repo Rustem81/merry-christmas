@@ -13,8 +13,6 @@ function cs_get_snowflakes(count) {
 }
 
 function cs_update_snowflakes(angle, snowflakes) {
-  //angle will be an ongoing incremental flag. Sin and Cos functions will be applied to it to create vertical and horizontal movements of the flakes
-  angle += 0.01;
   for(var i = 0; i < snowflakes.length; i++) {
     var p = snowflakes[i];
     //Updating X and Y coordinates

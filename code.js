@@ -96,6 +96,7 @@ function update() {
 
   // snowflakes
   cs_draw_snowflakes(ctx, snowflakes);
+  snowflakes_angle += 0.01;
   cs_update_snowflakes(snowflakes_angle, snowflakes);
 }
 
