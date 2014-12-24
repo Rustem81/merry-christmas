@@ -130,6 +130,7 @@ document.body.addEventListener("keyup", function(e) {
 
 window.addEventListener("load", function(){
   setInterval(update, 33);
+  setInterval(cm_update_mario, 400, mario);
 });
 
 window.addEventListener("resize", function() {
