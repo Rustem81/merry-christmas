@@ -81,7 +81,8 @@ function write_greetings(context) {
 
 function update() {
   // update state
-  cm_update_mario_for_keys(player, keys);
+  // don't move for now
+  // cm_update_mario_for_keys(player, keys);
 
   // redraw
   ctx.clearRect(0,0,width,height);
@@ -108,7 +109,7 @@ function update() {
   ctx.restore();
 
   // mario
-  // cm_draw_mario(mario, ctx);
+  cm_draw_mario(mario, ctx);
 
   write_greetings(ctx);
 

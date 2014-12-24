@@ -2,7 +2,7 @@ var friction = 0.8;
 var gravity = 0.3;
 
 var mario0 = new Image();
-mario0.src = "mario_0.png";
+mario0.src = "mokagio.png";
 
 var mario1 = new Image();
 mario1.src = "mario_1.png";
@@ -67,5 +67,5 @@ function cm_update_mario_for_keys(player, keys) {
 
 function cm_draw_mario(mario, context) {
   var mario_frame = mario_frames[mario_index];
-  context.drawImage(mario_frame, player.x, player.y + player.height - mario_frame.height, mario_frame.width, mario_frame.height);
+  context.drawImage(mario_frame, player.x - mario_frame.width / 2, player.y + player.height - mario_frame.height, mario_frame.width, mario_frame.height);
 }
