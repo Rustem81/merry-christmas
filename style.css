@@ -33,3 +33,13 @@ body {
 	text-decoration: none;
 	color: rgb(107, 146, 185);
 }
+
+p {
+	margin-bottom: 60px;
+}
+
+.smaller {
+	font-size: 12pt;
+	margin-bottom: 8px;
+	margin-top: 0;
+}
