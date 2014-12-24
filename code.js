@@ -35,12 +35,30 @@ canvas.height = height;
 var background = new Image();
 background.src = "background.png";
 
+function resize_canvas() {
+  width = window.innerWidth;
+  height = Math.min(window.innerHeight, 550);
+
+  canvas.width = width;
+  canvas.height = height;
+}
+
 function write_greetings(context) {
   context.save();
 
   var font_height = 40;
-  var top_margin = 18;
-  var margin_vertical = 22;
+  var top_margin_ratio = 2.22;
+  var margin_vertical_ratio = 1.81;
+
+  var second_line = "and a Happy New Year";
+
+  var correction = 0.9;
+  if (second_line.length * font_height * correction > width) {
+    font_height = width / (second_line.length * correction);
+  }
+
+  var top_margin = font_height / top_margin_ratio;
+  var margin_vertical = font_height / margin_vertical_ratio;
 
   context.font = font_height + "pt SuperMario";
   context.fillStyle = 'Snow';
@@ -56,7 +74,7 @@ function write_greetings(context) {
   context.fillText('Merry Christmas', width / 2, title_y);
 
   title_y += font_height + margin_vertical
-  context.fillText('and a Happy New Year', width / 2, title_y);
+  context.fillText(second_line, width / 2, title_y);
 
   context.restore();
 }
@@ -111,4 +129,8 @@ document.body.addEventListener("keyup", function(e) {
 
 window.addEventListener("load", function(){
   setInterval(update, 33);
+});
+
+window.addEventListener("resize", function() {
+  resize_canvas();
 });
